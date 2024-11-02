@@ -1,3 +1,5 @@
+const fs = require("node:fs");
+
 const getConn = require("./database");
 
 function migrate() {
