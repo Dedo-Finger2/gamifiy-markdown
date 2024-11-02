@@ -4,6 +4,7 @@ const {
   insertMainFolderPath,
   getCurrentMainFolderPath,
   getAllShopItems,
+  createShopItem,
 } = require("./repository.js");
 
 const userPlataform = {
@@ -55,6 +56,12 @@ async function createMainWindow() {
   ipcMain.on("request:all-shop-items", async (event) => {
     const allShopItems = await getAllShopItems();
     event.reply("response:all-shop-items", allShopItems);
+  });
+  ipcMain.on("item:create", async (event, options) => {
+    console.log(event);
+    console.log(options);
+
+    await createShopItem(options);
   });
 }
 

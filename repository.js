@@ -1,4 +1,5 @@
 const getConn = require("./database");
+const crypto = require("node:crypto");
 
 async function insertMainFolderPath(path) {
   const db = await getConn();
@@ -45,8 +46,25 @@ async function getAllShopItems() {
   return items;
 }
 
+async function createShopItem(data) {
+  const db = await getConn();
+
+  const id = crypto.randomUUID();
+  const createdAt = new Date();
+  const updatedAt = new Date();
+  const { name, cost, description, value } = data;
+
+  await db.run(
+    `INSERT INTO shop_items (id, name, cost, description, value, created_at, updated_at) VALUES (?,?,?,?,?,?,?)`,
+    [id, name, cost, description, value, createdAt, updatedAt],
+  );
+
+  await db.close();
+}
+
 module.exports = {
   insertMainFolderPath,
   getCurrentMainFolderPath,
   getAllShopItems,
+  createShopItem,
 };

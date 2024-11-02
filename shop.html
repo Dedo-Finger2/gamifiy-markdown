@@ -12,7 +12,37 @@
   <main>
     <h1>Shop</h1>
     <hr />
-    <button type="button">Create new item</button>
+    <button type="button" id="btn-open-create-shop-item-dialog">
+      Create new item
+    </button>
+
+    <dialog id="dialog-create-shop-item">
+      <form id="form-create-shop-item">
+        <div>
+          <label for="item-name">Name:</label>
+          <input type="text" id="item-name" name="item-name" />
+        </div>
+
+        <div>
+          <label for="item-cost">Cost:</label>
+          <input type="number" step="0.1" id="item-cost" name="item-cost" />
+        </div>
+
+        <div>
+          <label for="item-value">Value:</label>
+          <input type="number" step="1" id="item-value" name="item-value" />
+        </div>
+
+        <div>
+          <label for="item-description">Description:</label>
+          <textarea name="item-description" id="item-description"></textarea>
+        </div>
+
+        <button type="submit">Save</button>
+      </form>
+      <button id="btn-close-create-shop-item-dialog">Close</button>
+    </dialog>
+
     <hr />
     <div id="items-wrapper"></div>
   </main>
