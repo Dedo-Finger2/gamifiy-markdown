@@ -3,6 +3,7 @@ const path = require("node:path");
 const {
   insertMainFolderPath,
   getCurrentMainFolderPath,
+  getAllShopItems,
 } = require("./repository.js");
 
 const userPlataform = {
@@ -39,9 +40,6 @@ async function createMainWindow() {
 
   const mainFolderPath = await getCurrentMainFolderPath();
 
-  console.warn("[[[[[[[[[AQUI]]]]]]]]]");
-  console.warn(mainFolderPath);
-
   if (mainFolderPath) {
     mainWindow.loadFile("./shop.html");
   } else {
@@ -53,6 +51,10 @@ async function createMainWindow() {
   ipcMain.handle("dialog:selectFolder", handleSelectMainFolder);
   ipcMain.on("navigate", (_event, targetPage) => {
     mainWindow.loadFile(targetPage);
+  });
+  ipcMain.on("request:all-shop-items", async (event) => {
+    const allShopItems = await getAllShopItems();
+    event.reply("response:all-shop-items", allShopItems);
   });
 }
 

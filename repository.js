@@ -35,7 +35,18 @@ async function getCurrentMainFolderPath() {
   return mainFolder.path;
 }
 
+async function getAllShopItems() {
+  const db = await getConn();
+
+  const items = await db.all(`SELECT * FROM shop_items`);
+
+  await db.close();
+
+  return items;
+}
+
 module.exports = {
   insertMainFolderPath,
   getCurrentMainFolderPath,
+  getAllShopItems,
 };
