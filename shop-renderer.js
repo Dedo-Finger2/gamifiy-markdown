@@ -1,3 +1,6 @@
+const paragraphCurrentCoins = document.querySelector(
+  "#paragraph-current-coins",
+);
 const itemsWrapper = document.querySelector("#items-wrapper");
 const dialogCreateShopItem = document.querySelector("#dialog-create-shop-item");
 const btnOpenCreateShopItemDialog = document.querySelector(
@@ -12,6 +15,18 @@ const inputItemName = document.querySelector("#item-name");
 const inputItemCost = document.querySelector("#item-cost");
 const inputItemDescription = document.querySelector("#item-description");
 const inputItemValue = document.querySelector("#item-value");
+
+function loadCurrentCoinsAmount() {
+  window.electronAPI.requestData("request:coins");
+
+  window.electronAPI.receiveData("response:coins", (data) => {
+    if (data.length === 0) {
+      paragraphCurrentCoins.textContent = 0;
+    }
+
+    paragraphCurrentCoins.textContent = data.coins;
+  });
+}
 
 function loadItems() {
   window.electronAPI.requestData("request:all-shop-items");
@@ -52,8 +67,6 @@ function loadItems() {
       divItemWrapper.appendChild(btnBuyShopItem);
       itemsWrapper.appendChild(divItemWrapper);
     }
-
-    console.log(data);
   });
 }
 
@@ -83,3 +96,4 @@ btnCloseCreateShopItemDialog.addEventListener("click", (_e) => {
 });
 
 loadItems();
+loadCurrentCoinsAmount();

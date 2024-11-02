@@ -62,9 +62,20 @@ async function createShopItem(data) {
   await db.close();
 }
 
+async function getCoins() {
+  const db = await getConn();
+
+  const currentCoins = db.get(`SELECT coins FROM main_folders LIMIT 1`);
+
+  await db.close();
+
+  return currentCoins;
+}
+
 module.exports = {
   insertMainFolderPath,
   getCurrentMainFolderPath,
   getAllShopItems,
   createShopItem,
+  getCoins,
 };
