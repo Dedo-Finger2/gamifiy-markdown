@@ -1,6 +1,9 @@
 const { app, BrowserWindow, ipcMain, dialog } = require("electron");
 const path = require("node:path");
-const insertMainFolderPath = require("./repository.js");
+const {
+  insertMainFolderPath,
+  getCurrentMainFolderPath,
+} = require("./repository.js");
 
 const userPlataform = {
   mac: process.platform === "darwin",
@@ -22,7 +25,7 @@ async function handleSelectMainFolder(_event, _options) {
   insertMainFolderPath(mainFolderPath);
 }
 
-function createMainWindow() {
+async function createMainWindow() {
   const mainWindow = new BrowserWindow({
     title: "Gamify Markdown",
     width: 900,
@@ -34,7 +37,16 @@ function createMainWindow() {
     },
   });
 
-  mainWindow.loadFile("./index.html");
+  const mainFolderPath = await getCurrentMainFolderPath();
+
+  console.warn("[[[[[[[[[AQUI]]]]]]]]]");
+  console.warn(mainFolderPath);
+
+  if (mainFolderPath) {
+    mainWindow.loadFile("./shop.html");
+  } else {
+    mainWindow.loadFile("./index.html");
+  }
 
   mainWindow.webContents.openDevTools();
 
