@@ -33,7 +33,7 @@ async function getCurrentMainFolderPath() {
 
   await db.close();
 
-  return mainFolder.path;
+  return mainFolder?.path;
 }
 
 async function getAllShopItems() {
