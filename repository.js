@@ -1,6 +1,8 @@
 const getConn = require("./database");
 
-function insertMainFolderPath(path) {
+async function insertMainFolderPath(path) {
+  const db = await getConn();
+
   const newMainFolderData = {
     id: randomUUID(),
     path,
@@ -9,7 +11,7 @@ function insertMainFolderPath(path) {
     updatedAt: new Date(),
   };
 
-  getConn().run(
+  await db.run(
     `INSERT INTO main_folders (id, path, coins, created_at, updated_at) VALUES (?,?,?,?,?)`,
     [
       newMainFolderData.id,
@@ -18,12 +20,22 @@ function insertMainFolderPath(path) {
       newMainFolderData.createdAt,
       newMainFolderData.updatedAt,
     ],
-    (error) => {
-      if (error) {
-        console.error(error.message);
-      }
-    },
   );
+
+  await db.close();
 }
 
-module.exports = insertMainFolderPath;
+async function getCurrentMainFolderPath() {
+  const db = await getConn();
+
+  const mainFolder = await db.get(`SELECT path FROM main_folders`);
+
+  await db.close();
+
+  return mainFolder.path;
+}
+
+module.exports = {
+  insertMainFolderPath,
+  getCurrentMainFolderPath,
+};
