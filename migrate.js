@@ -1,10 +1,13 @@
 const fs = require("node:fs");
-
 const getConn = require("./database");
 
-function migrate() {
+async function migrate() {
+  const db = await getConn();
+
   const data = fs.readFileSync("./init.sql", "utf8");
-  getConn().exec(data);
+  await db.exec(data);
+
+  await db.close();
 }
 
 migrate();
