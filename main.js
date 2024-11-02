@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain, dialog } = require("electron");
 const path = require("node:path");
+const insertMainFolderPath = require("./repository.js");
 
 const userPlataform = {
   mac: process.platform === "darwin",
@@ -17,6 +18,8 @@ async function handleSelectMainFolder(_event, _options) {
   }
 
   const mainFolderPath = filePaths[0];
+
+  insertMainFolderPath(mainFolderPath);
 }
 
 function createMainWindow() {
