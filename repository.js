@@ -5,7 +5,7 @@ async function insertMainFolderPath(path) {
   const db = await getConn();
 
   const newMainFolderData = {
-    id: randomUUID(),
+    id: crypto.randomUUID(),
     path,
     coins: 0,
     createdAt: new Date(),
