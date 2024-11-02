@@ -1,15 +1,11 @@
 const sqlite3 = require("sqlite3").verbose();
-const databasePath = "./database.db";
-const fs = require("node:fs");
+const sqlite = require("sqlite");
 
-function getConn() {
-  const db = new sqlite3.Database(databasePath, (error) => {
-    if (error) {
-      return console.error(error.message);
-    }
+async function getConn() {
+  return sqlite.open({
+    filename: "./database.db",
+    driver: sqlite3.Database,
   });
-
-  return db;
 }
 
 module.exports = getConn;
