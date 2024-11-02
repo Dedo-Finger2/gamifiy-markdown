@@ -37,3 +37,14 @@ assim que o mesmo for concluído, o usuário receberá suas moedas a depender, p
 Outros arquivos markdown como notas, que podem não possui um metadado de "Status" darão moedas assim que criados
 e a quantidade de moedas será baseado nos atributos desse arquivo. Tais quais: Tamanho do título, quantidade de
 palavras, etc.
+
+## Como funciona o sistema num geral
+
+1. O usuário define uma pasta principal contendo seus arquivos markdown (podem estar dentro de subpastas);
+   1.1. O sistema registrar cada arquivo que ainda não está presente no banco de dados;
+   1.2. O sistema analisa todos os arquivos e faz os devidos cálculos de moedas ganhas para cada tipo de arquivo (seria interessante fazer isso usando streams e mostrando ao usuário quantos arquivos foram analisados e quantos faltam).
+2. O usuário é enviado para atela de shop;
+3. O usuário pode criar novos items;
+4. O usuário pode comprar um item;
+   4.1. O sistema calcula quanto o usuário gastou e reduz suas moedas;
+5. Periodicamente o sistema analisa os arquivos que foram modificados, calculando a nova quantidade de dinheiro que ele dá.
