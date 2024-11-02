@@ -20,6 +20,40 @@ function loadItems() {
     if (data.length === 0) {
       itemsWrapper.textContent = "No items found.";
     }
+
+    for (const shopItem of data) {
+      const divItemWrapper = document.createElement("div");
+      divItemWrapper.id = shopItem.id;
+      divItemWrapper.classList.add("item-wrapper");
+
+      const spanItemName = document.createElement("span");
+      spanItemName.textContent = shopItem.name;
+
+      const spanItemCost = document.createElement("span");
+      spanItemCost.textContent = shopItem.cost;
+
+      const paragraphItemDescription = document.createElement("p");
+      paragraphItemDescription.textContent = shopItem.description;
+
+      const btnDeleteShopItem = document.createElement("button");
+      btnDeleteShopItem.classList.add("btn-delete-item");
+      btnDeleteShopItem.id = shopItem.id;
+      btnDeleteShopItem.textContent = "Delete";
+
+      const btnBuyShopItem = document.createElement("button");
+      btnBuyShopItem.classList.add("btn-buy-item");
+      btnBuyShopItem.id = shopItem.id;
+      btnBuyShopItem.textContent = "Buy";
+
+      divItemWrapper.appendChild(spanItemName);
+      divItemWrapper.appendChild(spanItemCost);
+      divItemWrapper.appendChild(paragraphItemDescription);
+      divItemWrapper.appendChild(btnDeleteShopItem);
+      divItemWrapper.appendChild(btnBuyShopItem);
+      itemsWrapper.appendChild(divItemWrapper);
+    }
+
+    console.log(data);
   });
 }
 
@@ -34,6 +68,8 @@ function handleCreateShopItem(e) {
   };
 
   ipcRenderer.send("item:create", data);
+
+  loadItems();
 }
 
 formCreateShopItem.addEventListener("submit", handleCreateShopItem);
